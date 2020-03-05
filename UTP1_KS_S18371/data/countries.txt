@@ -1,0 +1,7 @@
+Name    Capital    Population
+Republic of Poland    Warsaw    38500
+Czech Republic    Prague    10500
+Kingdom of Spain    Madrid    46599
+Bahrain    Manama    1425
+Monaco    Monaco    38
+Ukraine    Kiev    42030
