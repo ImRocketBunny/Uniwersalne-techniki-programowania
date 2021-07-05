@@ -64,7 +64,7 @@ wyróżnić komórki z liczbą ludności dla państw z ludnością > 20 mln czer
 
 
 # UTP 3 
-# Zadane 1 ceny przelotów
+## Zadane 1 ceny przelotów
 Lista dest zawiera informacje o cenach przelotów w postaci napisów: port_wylotu port_przylotu cena_w_EUR
 
 Należy utworzyć listę wynikową, której elementy będą opisywać ceny przelotów do poszczególnych miejsc (tylko) z Warszawy w PLN i wypisać na konsoli jej kolejne elementy.
@@ -121,7 +121,7 @@ to HKT - price in PLN: 4300
 
 Postać wydruku jest obowiązkowa.
 
-# Zad 2 ceny przelotów
+## Zad 2 ceny przelotów
 
 Lista dest zawiera informacje o cenach przelotów w postaci napisów: port_wylotu port_przylotu cena_w_EUR
 
@@ -158,4 +158,79 @@ to HAV - price in PLN: 5160
 to DPS - price in PLN: 8600
 
 to HKT - price in PLN: 4300
+
+# UTP4
+## Zad 1
+Zadanie badawczo-analityczne
+
+klasa InputConverter - bezpieczeństwo fazy wykonania
+
+Zobaczmy przykładowy fragment z poprzedniego zadania:
+```
+public static void main(String[] args) {
+    /*
+     *  definicja operacji w postaci lambda-wyrażeń:
+     *  - flines - zwraca listę wierszy z pliku tekstowego
+     *  - join - łączy napisy z listy (zwraca napis połączonych ze sobą elementów listy napisów)
+     *  - collectInts - zwraca listę liczb całkowitych zawartych w napisie
+     *  - sum - zwraca sumę elmentów listy liczb całkowitych
+     */
+
+    String fname = System.getProperty("user.home") + "/LamComFile.txt"; 
+    InputConverter<String> fileConv = new InputConverter<>(fname);
+    List<String> lines = fileConv.convertBy(flines);
+    String text = fileConv.convertBy(flines, join);
+    List<Integer> ints = fileConv.convertBy(flines, join, collectInts);
+    Integer sumints = fileConv.convertBy(flines, join, collectInts, sum);
+
+    System.out.println(lines);
+    System.out.println(text);
+    System.out.println(ints);
+    System.out.println(sumints);
+
+    List<String> arglist = Arrays.asList(args);
+    InputConverter<List<String>> slistConv = new InputConverter<>(arglist);  
+    sumints = slistConv.convertBy(join, collectInts, sum);
+    System.out.println(sumints);
+  }
+```
+Przy powierzchownej konstrukcji klasy InputConverter i metody convertBy następujący fragment:
+```
+ slistConv.convertBy(collectInts, sum); 
+```
+spowoduje powstanie wyjątku ClassCastException
+
+Zadania badawcze: jak temu zaradzić w fazie wykonania programu, tak by uzyskiwać operacyjne wyniki (i nigdy NullPointerException)
+
+To wymaga odpowiedniej definicji klasy InputConverter oraz ew. modyfikacji klasy Main (są tu dozwolone) .
+
+## Zad 2 
+Zadanie badawcze Przekazywanie wyjątków kontrolowanych z lambda-wyrażeń do obsługi w bloku otaczającym lambda.
+
+Uwaga: w programie nie wolno definiować żadnych własnych interfejsów (za wyjątkiem być może rozszerzeń interfejsów z pakietu java.util.function), a więc operacje flines, join, itp. muszą opierać się na gotowych interfejsach funkcyjnych z pakietu java.util.function lub ich rozszerzeniach.
+
+Operacja flines zawiera odczyt pliku, zatem może powstać wyjątek IOException. Wymagane jest, aby tę operację zdefiniowac jako lambda-wyrażenie. Ale z lambda wyrażeń, opierających się na interfejsach funkcyjnych z pakietu java.util.function, nie możemy przekazać obsługi wyjatków do otaczającego bloku. I wobec tego musimy pisać w definicji flines try { } catch { } Jak spowodować, aby nie było to konieczne i w przypadku powstania wyjątku IOException zadziałała klauzula throws metody main ?
+
+## Zad 3
+Zadanie. Lambda-wyrażenia dla niefunkcyjnych interfejsów ? Spowodować, by w programie, po naciśnięciu klawisza myszki na przycisku b na konsoli zostało wypisane "ok".
+
+## Zad 4
+Zadanie: dodatkowe operacje na listach
+
+Stworzyć klasę XList, dostarczającą dodatkowych możliwości tworzenia list i operowania na nich. W klasie powinny znaleźć się odpowiednie konstruktory oraz statyczne metody of, umożliwiające tworzenie obiektów XList z innych kolekcji, tablic oraz argumentów podawanych przez przecinki.
+
+Dodatkowo pomocnicze metody do tworzenia xlist z napisów:
+
+ofChars(napis) - zwraca x-listę znaków napisu,
+ofTokens(napis, [ sep ]) - zwraca x-listę symboli napisu, rozdzielonych separatorami z sep (jesśi brak - to białymi znakami).
+Oprócz tego dostarczyć metod:
+
+union(dowolna_kolekcja) - zwraca nową x-list z dołączaną do tej x-list zawartością kolekcji,
+diff(dowolna_kolekcja) - zwraca x-list zawierającą te elementy tej x-list, które nie występują w kolekcji,
+unique() - zwraca nową x-list, która zawiera wszystkie niepowtarzające się elementy tej x-list
+combine() - zwraca x-listę list-kombinacji elementów z poszczególnych kolekcji, będących elementami tej x-listy
+collect(Function) - zwraca nową x-listę, której elemenatmi są wyniki funkcji stosowanej wobec elementów tej x-listy,
+join([sep]) - zwraca napis, będący połączeniem elementów tej x-listy, z ewentualnie wstawionym pomiędzy nie separatorem,
+forEachWithIndex(konsumer_z_dwoma argumentami: element, index) - do iterowania po liście z dostępem i do elementów i do ich indeksów.
+
 
