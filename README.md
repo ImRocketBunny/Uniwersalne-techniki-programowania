@@ -394,6 +394,68 @@ Uwagi:
 
 zgodność informacji wyjściowej z oczekiwanym wynikiem (w tym kolejność pokazywania danych) jest istotna – wynika z zastosowania odpowiednich map i innych klas kolekcyjnych. Uniwersalność metod sorted i filtered (możliwość ich zastosowania dla innych niż w zadaniu map).W klasie ProgLang nie wolno używac surowych typów.
 
+# UTP6
+## Zad 1
 
 
+## Zad 2
+
+Zadanie 'FileVisitor':
+
+Katalog {user.home}/UTP6dir zawiera pliki tekstowe (z rozszerzeniem .txt) umieszczone w różnych podkatalogach. Kodowanie plików to Cp1250. Przeglądając rekursywnie drzewo katalogowe, zaczynające się od {user.home}/UTP6dir, wczytać wszystkie te pliki. i połączoną ich zawartość zapisać do pliku o nazwie UTP6res.txt, znadującym się w katalogu projektu. Kodowanie pliku UTP6res.txt winno być UTF-8.
+
+Uwagi:
+
+trzeba dostarczyć definicji klasy Futil,
+należy zastosować FileVisitor do przeglądania katalogu,
+nalezy zalożyć, że na starcie programu wynikowego pliku nie ma.
+
+# UTP7
+
+# UTP8
+
+## Zad 1
+
+# UTP10
+
+## Zad 1
+Napisać prosty kalkulator dla liczb typu BigDecimal. Obliczenia mają być podawane jako argumenty wiersza poleceń w postaci:
+```
+liczba1 op liczba2
+```
+gdzie op jeden ze znaków +,- (minus), * (mnożenie), / (dzielenie), a pomiędzy liczba1, op i liczba2 występuje jeden lub więcej białych znaków.
+
+Obliczenia zrealizować w klasie Calc jako metodę String doCalc(String cmd), zwracająca napisową reprezentację wyniku (uzyskanej liczby) lub napis "Invalid command to calc", jeśli wystąpią jakiekolwiek błędy.
+
+Następująca klasa Main::
+```
+public class Main {
+  
+  public static void main(String[] args) {
+    Calc c = new Calc();
+    String wynik = c.doCalc(args[0]);
+    System.out.println(wynik);
+  }
+}
+```
+po uruchomieniu winna wyprowadzić na konsolę wynik obliczenia (np. jesli podano jako argument wiersza poleceń "1 / 2" , to wynikiem powinine być napis 0.5.
+
+Jeśli liczba wynikowa nie ma dokładnej reprezentacji (jak np. wynik dzielenia 1/3), to wynik powinien być pokazany z dokładnością co najmniej 7 miejsc dziesiętnych.
+
+Uwaga : W zadnej z klas programu nie wolno używać instrukcji if, ani switch, ani operatora warunkowego, ani instrukcji for, ani isntrukcji while.
+
+## Zad 2
+
+Zdefiniować klasę JavaBean o nazwie Purchase z trzema właściwościami: prod (String), data (typu String) i price (typu Double). Własciwość prod jest prosta, właściwości data i price są związane (bounded), włąsciwośc price jest dodatkowo ograniczane (constrained). Za pomoca mechanizmu nasłuchu i wetowania zmian właściwości umożliwić: wypisywanie na konsoli wszystkich zmian dat i cen, kontrolę poprawności zmian: nie można zmienić ceny na liczbę mniejszą od 1000.
+
+Program powinien wypisać na konsoli:
+
+```
+Purchase [prod=komputer, data=nie ma promocji, price=3000.0]
+Change value of: data from: nie ma promocji to: w promocji
+Change value of: price from: 3000.0 to: 2000.0
+Purchase [prod=komputer, data=w promocji, price=2000.0]
+Price change to: 500.0 not allowed
+Purchase [prod=komputer, data=w promocji, price=2000.0]
+```
 
